@@ -1,26 +1,26 @@
 module.exports = (buildSchema) => {
     return {
-      productsSchema: buildSchema(`
-        type Product {
+      productSchema: buildSchema(`
+        type Products {
           pid: ID
-          name: String
-          price: Int
           id_pc: Int
           id_u: Int
+          name: String
+          price: Int
+          description: String
         }
 
         type Query {
-          products(id: ID): [Product]
+          product(id: ID): [Products]
         }`
       ),
-      productsQuery: `
+      productQuery: `
         {
-          products {
+          product {
             pid
             name
             price
-            id_pc
-            id_u
+            description
           }
         }`
       }

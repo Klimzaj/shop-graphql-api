@@ -1,6 +1,6 @@
 module.exports = (buildSchema) => {
     return {
-      userDetailSchema: buildSchema(`
+      userDetailsSchema: buildSchema(`
         type UserDetails {
           udid: ID
           name: String
