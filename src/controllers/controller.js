@@ -143,7 +143,7 @@ module.exports = {
 
         ) {
             connection.query('update user inner join user_details on id_ud = udid set name = ?,surname = ?,adress = ?, phone = ?,email = ? where uid = ?',
-                [id],
+                [name,surname,address,phone,email,id],
                 async (err, result) => {
                     // console.log('edit')
                     handleSuccessOrErrorMessage(err, result, res);
@@ -243,19 +243,34 @@ module.exports = {
         })
     },
 
-
     //LogIn SELECT * from user inner join user_details on id_ud = udid where username = ? and password = ? and isDelete = 0
-    login: (req, res) => {
-        connection.query('SELECT * from user inner join user_details on id_ud = udid where username = ? and password = ? and isDelete = 0', [req.params.log,req.params.password], async (err, rows) => {
-            const response = await graphql(usersSchema, usersQuery, {users: rows});
+    login: (req, res, next) => {
+        let response;
+        const log = req.body.log;
+        const password = req.body.password;
+        if (
+            typeof log !== 'undefined'
+            && typeof password !== 'undefined'
+        ) {
+            connection.query('SELECT * from user inner join user_details on id_ud = udid where username = ? and password = ? and isDelete = 0', 
+            [log,password], async (err, rows) => {
+                const response = await graphql(usersSchema, usersQuery, {users: rows});
+                res.setHeader('Content-Type', 'application/json');
+                res.status(200).send(JSON.stringify(
+                    {
+                        'result' : 'success',
+                        'data': response.data
+                    })
+                );
+            })            
+        } else {
+            response = {
+                'result' : 'error',
+                'msg' : 'Please fill required details'
+            };
             res.setHeader('Content-Type', 'application/json');
-            res.status(200).send(JSON.stringify(
-                {
-                    'result' : 'success',
-                    'data': response.data
-                })
-            );
-        })
+            res.status(200).send(JSON.stringify(response));
+        }
     },
 
     isLogin: (req, res) => {
