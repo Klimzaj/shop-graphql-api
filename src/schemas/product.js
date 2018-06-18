@@ -8,6 +8,7 @@ module.exports = (buildSchema) => {
           name: String
           price: Int
           description: String
+          isBought: Boolean
         }
 
         type Query {
@@ -18,9 +19,12 @@ module.exports = (buildSchema) => {
         {
           product {
             pid
+            id_u
+            id_pc
             name
             price
             description
+            isBought
           }
         }`
       }

@@ -4,22 +4,27 @@ const router = express.Router()
 const notFoundController = require('../controllers/not-found-controller')
 const controller = require('../controllers/controller.js')
 
+// router.get('/productCat/:id',controller.productCat);
+router.get('/userInfo/:id',controller.userInfo); //uzyc do nazwy wystawiajacego produkt 
 
-router.get('/allCat', controller.allCat);
-router.post('/addProduct', controller.addProduct);
-router.post('/addUser', controller.addUser);
+
+router.get('/productId/:id',controller.productId);
+
+//done
+
+router.get('/productBoughtId/:id',controller.productBoughtId);
+router.post('/deleteProduct',controller.deleteProduct);
 router.post('/buyProduct', controller.buyProduct);
+router.get('/allproducts',controller.allProducts);
+router.post('/addProduct', controller.addProduct);
+router.post('/deleteUser',controller.deleteUser);
+router.get('/allCat', controller.allCat);
 router.post('/editMyInfo',controller.editMyInfo);
 router.get('/myInfo/:id',controller.myInfo);
-router.get('/userInfo/:id',controller.userInfo);
-router.post('/deleteUser/:id',controller.deleteUser);
-router.post('/deleteProduct/:id',controller.deleteProduct);
-router.get('/allproducts',controller.allProducts);
-router.get('/productBoughtId/:id',controller.productBoughtId);
-router.get('/productCat/:id',controller.productCat);
-router.get('/productId/:id',controller.productId);
-router.get('/login',controller.login);
 router.get('/isLogin/:log',controller.isLogin);
+router.post('/addUser', controller.addUser);
+router.get('/login',controller.login);
+
 
 router.get('*', notFoundController.show);
 

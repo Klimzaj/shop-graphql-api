@@ -10,11 +10,10 @@ module.exports = (buildSchema) => {
           user(id: ID): [User]
         }`
       ),
-      usersQuery: `
+      userQuery: `
         {
           user {
             uid
-            username
           }
         }`
       }
